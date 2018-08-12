@@ -7,7 +7,6 @@
 
 
 
-
 Road::Road(std::vector<RoadLine>& rightLines, std::vector<RoadLine>& leftLines)
 {
 	this->rightLines = rightLines;

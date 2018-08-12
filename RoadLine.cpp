@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "RoadEvent.h"
+
 RoadLine::RoadLine(std::vector<RoadEvent>& Event) {
 
 	this->Event = Event;

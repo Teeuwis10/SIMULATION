@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParamHolder.cpp" />
     <ClCompile Include="Road.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="ParamHolder.h" />
     <ClInclude Include="resource.h" />

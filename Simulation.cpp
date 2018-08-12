@@ -5,6 +5,7 @@
 #include <vector>
 #include "RoadLine.h"
 #include "RoadEvent.h"
+#include "EventManager.h"
 Simulation::Simulation()
 {
 }
@@ -13,11 +14,15 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	
 	RoadBuilder tmp = RoadBuilder();
 	Road Road = tmp.Build();
-
+	EventManager eventManager = EventManager();
 
 	for (int i = 0; i < 10; i++)
 	{
 		Road.spawnCar("CAR",5, 1);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		eventManager.spawnCar("CAR", 5, 1,Road);
 	}
 	
 	while (true)
@@ -28,7 +33,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
 
-				RoadEvent & Test = (*itt);
+				
 				
 				if ((*itt).name == "CAR")
 				{
@@ -46,7 +51,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 
 	}
 	
-
+	
 }
 
 Simulation::~Simulation()

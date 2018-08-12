@@ -1,4 +1,6 @@
 #include "RoadEvent.h"
+#include "Road.h"
+
 
 
 
@@ -16,19 +18,38 @@ RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, in
 	this->safeDistance = safeDistance;
 
 }
-//RoadEvent::RoadEvent(std::string name, int position, int lenght,Road& road)
+/*RoadEvent::RoadEvent(std::string name, int position, int lenght, Road &road)
+{
+	this->name = name;
+	this->position = position;
+	this->lenght = lenght;
+	this->road = road;
+
+}*/
+
 RoadEvent::RoadEvent(std::string name, int position, int lenght)
 {
 	this->name = name;
 	this->position = position;
 	this->lenght = lenght;
-	
-	
+
+
 }
+/*RoadEvent::RoadEvent(std::string name, int position, int lenght , Road& road)
+{
+	this->name = name;
+	this->position = position;
+	this->lenght = lenght;
+
+
+}*/
 
 void RoadEvent::Drive() {
 	position++;
+
 }
+//RoadEvent::RoadEvent(Road& road){}
+//RoadEvent::RoadEvent(int road) {}
 RoadEvent::~RoadEvent()
 {
 }
