@@ -10,7 +10,7 @@ int main()
 	simulation.StartSimulation(Paramiters);
 
 
-
+	zjebana linijka
 
 	system("pause");
 
