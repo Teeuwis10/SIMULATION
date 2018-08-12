@@ -24,17 +24,16 @@ Road RoadBuilder::Build()
 	std::vector<RoadEvent> firstRightLineEvents;
 
 	firstRightLineEvents.push_back(RoadEvent("START",0, 0));
-	firstRightLineEvents.push_back(RoadEvent("EXIT", 100, 0));
-	//firstRightLineEvents.push_back(RoadEvent(0, 0));
-	//firstRightLineEvents.push_back(RoadEvent(100, 0));
+	firstRightLineEvents.push_back(RoadEvent("END", 99, 0));
+	
 	rightLines.push_back(RoadLine(firstRightLineEvents));
 
 	//----------------------------Left Side------------------------------------------------------------
 
 	std::vector<RoadEvent> firstLeftLineEvents;
 
-	firstLeftLineEvents.push_back(RoadEvent("START",100, 0));
-	firstLeftLineEvents.push_back(RoadEvent("STOP",0, 0));
+	firstLeftLineEvents.push_back(RoadEvent("START",99, 0));
+	firstLeftLineEvents.push_back(RoadEvent("END",0, 0));
 
 
 	leftLines.push_back(RoadLine(firstLeftLineEvents));

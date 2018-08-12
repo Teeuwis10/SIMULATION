@@ -4,6 +4,8 @@
 #include "RoadEvent.h"
 #include "Tools.h"
 #include <string>
+#include "Simulation.h"
+
 
 
 Road::Road(std::vector<RoadLine>& rightLines, std::vector<RoadLine>& leftLines)
@@ -20,7 +22,7 @@ void Road::spawnCar(std::string name, int position, int lenght) {
 	auto rng = Tools();
 
 	rightLines.at(0).Event.insert(it, RoadEvent(name ,position, lenght, rng.RandF(4, 5), 0, rng.RandF(1, 2), 0, rng.RandF(2, 5)));
-	//rightLines.at(0).Event.insert(it, RoadEvent(name,position, lenght));
+	
 
 }
 

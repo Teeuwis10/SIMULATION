@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
+#include "Road.h"
 class RoadEvent
 {
 public:
+	
 	std::string name;
 	int position;
 	int lenght;
@@ -13,8 +15,8 @@ public:
 	int safeDistance;
 
 	RoadEvent(std::string name, int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance);
-	RoadEvent(std::string name, int position, int lenght);
-	//RoadEvent(std::string name,int position, int lenght);
+	//RoadEvent(std::string name, int position, int lenght, Road& road);
+	RoadEvent(std::string name,int position, int lenght);
 	void Drive();
 	~RoadEvent();
 };

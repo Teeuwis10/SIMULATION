@@ -1,0 +1,23 @@
+﻿  RoadEvent.cpp
+c:\users\raven\source\repos\simulation\simulation\roadline.h(7): error C2065: 'RoadEvent': undeclared identifier
+c:\users\raven\source\repos\simulation\simulation\roadline.h(7): error C2923: 'std::vector': 'RoadEvent' is not a valid template type argument for parameter '_Ty'
+c:\users\raven\source\repos\simulation\simulation\roadline.h(7): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\raven\source\repos\simulation\simulation\roadline.h(7): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+c:\users\raven\source\repos\simulation\simulation\roadline.h(10): error C2065: 'RoadEvent': undeclared identifier
+c:\users\raven\source\repos\simulation\simulation\roadline.h(10): error C2923: 'std::vector': 'RoadEvent' is not a valid template type argument for parameter '_Ty'
+c:\users\raven\source\repos\simulation\simulation\roadline.h(10): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\raven\source\repos\simulation\simulation\roadline.h(10): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+  RoadLine.cpp
+c:\users\raven\source\repos\simulation\simulation\road.h(11): error C2065: 'RoadLine': undeclared identifier
+c:\users\raven\source\repos\simulation\simulation\road.h(11): error C2923: 'std::vector': 'RoadLine' is not a valid template type argument for parameter '_Ty'
+c:\users\raven\source\repos\simulation\simulation\road.h(11): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\raven\source\repos\simulation\simulation\road.h(11): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+c:\users\raven\source\repos\simulation\simulation\road.h(12): error C2065: 'RoadLine': undeclared identifier
+c:\users\raven\source\repos\simulation\simulation\road.h(12): error C2923: 'std::vector': 'RoadLine' is not a valid template type argument for parameter '_Ty'
+c:\users\raven\source\repos\simulation\simulation\road.h(12): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\raven\source\repos\simulation\simulation\road.h(12): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+c:\users\raven\source\repos\simulation\simulation\road.h(16): error C2065: 'RoadLine': undeclared identifier
+c:\users\raven\source\repos\simulation\simulation\road.h(16): error C2923: 'std::vector': 'RoadLine' is not a valid template type argument for parameter '_Ty'
+c:\users\raven\source\repos\simulation\simulation\road.h(16): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\raven\source\repos\simulation\simulation\road.h(16): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+  Generating Code...

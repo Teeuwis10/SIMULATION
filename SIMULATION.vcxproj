@@ -31,12 +31,16 @@
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="ParamHolder.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Road.h" />
     <ClInclude Include="RoadBuilder.h" />
     <ClInclude Include="RoadEvent.h" />
     <ClInclude Include="RoadLine.h" />
     <ClInclude Include="Simulation.h" />
     <ClInclude Include="Tools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SIMULATION.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
