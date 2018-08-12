@@ -13,8 +13,7 @@ RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, in
 	this->maxAcc = maxAcc;
 	this->currentAcc = currentAcc;
 	this->safeDistance = safeDistance;
-	brokenline
-		brokenline2
+
 }
 RoadEvent::RoadEvent(std::string name, int position, int lenght)
 {
