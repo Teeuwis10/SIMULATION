@@ -16,15 +16,11 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	Road Road = tmp.Build();
 	EventManager eventManager = EventManager();
 
-	for (int i = 0; i < 10; i++)
-	{
-		Road.spawnCar("CAR",5, 1);
-	}
-	for (int i = 0; i < 10; i++)
+
+	for (int j = 0; j< 10; j++)
 	{
 		eventManager.spawnCar("CAR", 5, 1,Road);
 	}
-	
 	while (true)
 	{
 
@@ -33,23 +29,24 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
 
-				
-				
+
+
 				if ((*itt).name == "CAR")
 				{
-				
+
 					(*itt).Drive();
 				}
-				
-				
-				
+
+
+
 			}
 			(*it).RoadLinePrint();
-			
-			
+
+
 		}
 
 	}
+	
 	
 	
 }

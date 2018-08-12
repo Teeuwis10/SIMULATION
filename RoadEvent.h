@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
-
+//#include "Road.h"
+//#include "RoadLine.h"
+//#include "EventManager.h"
+//#include "Tools.h"
 
 
 
@@ -21,8 +24,7 @@ public:
 	RoadEvent(std::string name, int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance);
 	RoadEvent(std::string name, int position, int lenght);
 	//RoadEvent(std::string name, int position, int lenght, Road& road);
-	//RoadEvent(Road& road);
-	//RoadEvent(int road);
+	//void Drive(Road* road);
 	void Drive();
 	~RoadEvent();
 };

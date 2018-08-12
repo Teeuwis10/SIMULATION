@@ -48,8 +48,10 @@ void RoadEvent::Drive() {
 	position++;
 
 }
-//RoadEvent::RoadEvent(Road& road){}
-//RoadEvent::RoadEvent(int road) {}
+/*void RoadEvent::Drive(Road* road) {
+	position++;
+
+}*/
 RoadEvent::~RoadEvent()
 {
 }

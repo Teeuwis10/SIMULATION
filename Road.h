@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "RoadLine.h"
+#include "Road.h"
 #include <string>
 class Road
 {
@@ -15,7 +16,7 @@ public:
 	//Road(vector<RoadLine> &rightLines, vector<RoadLine> &leftLines);
 	Road(std::vector<RoadLine>& rightLines, std::vector<RoadLine>& leftLines);
 	
-	void spawnCar(std::string name,int position, int lenght);
+	
 	~Road();
 };
 
