@@ -37,6 +37,10 @@ void RoadLine::RoadLinePrint()
 		{
 			tmp[(*it).position] = 'E';
 		}
+		if ((*it).name == "CROSS")
+		{
+			tmp[(*it).position] = 'C';
+		}
 		
 
 	}

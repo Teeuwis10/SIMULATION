@@ -8,5 +8,6 @@ public:
 	RoadBuilder();
 	
 	~RoadBuilder();
-	Road Build();
+	Road BuildEast();
+	Road BuildSouth();
 };

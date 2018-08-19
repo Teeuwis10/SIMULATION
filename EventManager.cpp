@@ -21,3 +21,22 @@ void EventManager::spawnCar(std::string name, int position, int lenght, Road& ro
 
 
 }
+
+void EventManager::insertCar( std::string name, int position, int lenght, Road& road) {
+	std::vector<RoadEvent>::iterator it = road.rightLines.at(0).Event.begin();
+	for (; it != road.rightLines.at(0).Event.end(); it++)
+	{
+		if ((*it).name == "CROSS")
+		{
+			break;
+			
+		}
+		
+	}
+	auto rng = Tools();
+	//it++;
+	road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+
+
+}
+
