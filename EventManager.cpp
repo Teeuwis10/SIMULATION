@@ -34,7 +34,7 @@ void EventManager::insertCar( std::string name, int position, int lenght, Road& 
 		
 	}
 	auto rng = Tools();
-	//it++;
+	it++;
 	road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
 
 

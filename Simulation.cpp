@@ -168,7 +168,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 				//eventManager.spawnCar("CAR", 300, 10, SOUTHROAD);
 				//eventManager.insertCar("CAR", 300, 10, SOUTHROAD);
 				//eventManager.insertCar("CAR", a, lenght_, SOUTHROAD);
-				eventManager.insertCar("CAR", 501, 10, SOUTHROAD);
+				eventManager.insertCar("CAR", 550, 10, SOUTHROAD);
 
 
 
@@ -236,6 +236,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 					std::cout << "current event: " << currentEvent.position << ", distance to next" << Tool.getDistance(currentEvent, nextEvent) << std::endl;
 
 				}
+				
 
 
 
