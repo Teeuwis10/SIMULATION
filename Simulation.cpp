@@ -31,6 +31,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	
 	while (true)
 	{
+
 		bool bl = false;
 		for (std::vector<RoadLine>::iterator it = EASTROAD.rightLines.begin(); it != EASTROAD.rightLines.end(); it++)
 		{
@@ -40,120 +41,135 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
 			
-
-			
+				int direction = Tool.RandF(0, 1);
+				//std::cout << "rand: " << direction << std::endl;
 				if ((*itt).name == "CAR")
 
 				{
 					
-					auto tmp = std::next(itt, 1);
-					RoadEvent nextCar = *tmp;
-					RoadEvent nextEvent = *tmp;
-					RoadEvent currentEvent = *itt;
-					/*while (true)
-					{
-
-						if (nextEvent.name == "CAR")
-						{
-							a++;
-
-						}
-						else
-						{
-							auto rmp2 = std::next(itt, a);
-							nextEvent = *rmp2;
-							break;
-						}
-					}
-
-
-					//RoadEvent nextEvent
-
-					/*if (nextEvent.name == "CROSS")       // jedz prosto
-					{
-						auto tmp = std::next(itt, 2);
-						nextEvent = *tmp;
-					}*/
-
-
-					if (Tool.getDistance(currentEvent, nextEvent) > 0)
-					{
-						if (Tool.getDistance(currentEvent, nextEvent) + (*itt).curentSpeed > (*itt).safeDistance)
-
-						{
-							if ((*itt).curentSpeed < (*itt).topSpeed)
-							{
-								(*itt).curentSpeed++;
-							}
-
-
-						}
-						else if ((*itt).curentSpeed > 0) (*itt).curentSpeed--;
-
-						if ((*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextEvent.position)
-						{
-							(*itt).curentSpeed = 0;
-						}
-
-						(*itt).Drive((*itt).curentSpeed);
-
-					}
-					std::cout << "current event: " << currentEvent.position << ", distance to next" << Tool.getDistance(currentEvent, nextEvent) << std::endl;
-
-					if (nextEvent.name == "CROSS" && Tool.getDistance((*itt), nextEvent) < 15)       // jedz w prawo
-					{
+						auto tmp = std::next(itt, 1);
 						
-
-						for (std::vector<RoadLine>::iterator ol = SOUTHROAD.rightLines.begin(); ol != SOUTHROAD.rightLines.end(); ol++)
+						RoadEvent nextCar = *tmp;
+						RoadEvent nextEvent = *tmp;
+						RoadEvent currentEvent = *itt;
+						/*while (true)
 						{
-							
-							for (std::vector<RoadEvent>::iterator oll = (*ol).Event.begin(); oll != (*ol).Event.end(); oll++)
+
+							if (nextEvent.name == "CAR")
 							{
+								a++;
+
+							}
+							else
+							{
+								auto rmp2 = std::next(itt, a);
+								nextEvent = *rmp2;
+								break;
+							}
+						}
 
 
-								if ((*oll).name == "CROSS")
+						//RoadEvent nextEvent
+
+						/*if (nextEvent.name == "CROSS")       // jedz prosto
+						{
+							auto tmp = std::next(itt, 2);
+							nextEvent = *tmp;
+						}*/
+
+						if ( Tool.getDistance((*itt), nextCar)+(*itt).curentSpeed >=15 )
+						{
+
+							if(direction == 1 && nextCar.name == "CROSS")
+							{
+								tmp = std::next(itt, 2);
+								nextCar = *tmp;
+							}
+							if (Tool.getDistance(currentEvent, nextCar) > 0 )
+							{
+								if (Tool.getDistance(currentEvent, nextCar) + (*itt).curentSpeed > (*itt).safeDistance)
 
 								{
-									auto tmp = std::next(oll, -1);
-									auto tmp2 = std::next(oll, 1);
-									RoadEvent prevEvent = *tmp;
-									RoadEvent nextEvent1 = *tmp2;
-									std::cout << "samochod z pierwszenstwem" << (*tmp).position << std::endl;
-									if (prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 > (*oll).position && Tool.getDistance((*oll),nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+									if ((*itt).curentSpeed < (*itt).topSpeed)
 									{
-										(*itt).curentSpeed = 0;
-
+										(*itt).curentSpeed++;
 									}
-									else
-									{
-										//EASTROAD.rightLines.at(0).Event.erase(itt);
-										//(*itt).curentSpeed = 5;
-										//SOUTHROAD.rightLines.at(0).Event.insert(oll,eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD ;
-										//eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD) ;
-										//SOUTHROAD.rightLines.at(0).Event.insert(oll, *(itt));
-										//(*ol).Event.insert(itt, 0);
-										
-										
-										bl = true;
-										 a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
-										 lenght_ = (*oll).lenght;
-										 itt = (*it).Event.erase(itt);
-										//eventManager.insertCar("CAR", 300, 10, SOUTHROAD);
-										
-
-
-										//(*itt).topSpeed = 0;
-									}
-
-
 
 
 								}
+								else if ((*itt).curentSpeed > 0) (*itt).curentSpeed--;
+
+								if ((*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextCar.position)
+								{
+									(*itt).curentSpeed = 0;
+								}
+
+								(*itt).Drive((*itt).curentSpeed);
+
 							}
 							
 						}
-						
+						std::cout << "current event: " << currentEvent.position << ", distance to next" << Tool.getDistance(currentEvent, nextEvent) << std::endl;
+						//std::cout << "DZIAM ________________________________________________________________" << std::endl;
+						if (nextEvent.name == "CROSS" && Tool.getDistance((*itt), nextEvent)+(*itt).curentSpeed < 15 && direction == 0)       // jedz w prawo
+						{
+							
+
+							for (std::vector<RoadLine>::iterator ol = SOUTHROAD.rightLines.begin(); ol != SOUTHROAD.rightLines.end(); ol++)
+							{
+
+								for (std::vector<RoadEvent>::iterator oll = (*ol).Event.begin(); oll != (*ol).Event.end(); oll++)
+								{
+
+
+									if ((*oll).name == "CROSS")
+
+									{
+										auto tmp = std::next(oll, -1);
+										auto tmp2 = std::next(oll, 1);
+										RoadEvent prevEvent = *tmp;
+										RoadEvent nextEvent1 = *tmp2;
+										std::cout << "samochod z pierwszenstwem" << (*tmp).position << std::endl;
+										if (prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 > (*oll).position && Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+										{
+											(*itt).curentSpeed = 0;
+
+										}
+										else
+										{
+											//EASTROAD.rightLines.at(0).Event.erase(itt);
+											//(*itt).curentSpeed = 5;
+											//SOUTHROAD.rightLines.at(0).Event.insert(oll,eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD ;
+											//eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD) ;
+											//SOUTHROAD.rightLines.at(0).Event.insert(oll, *(itt));
+											//(*ol).Event.insert(itt, 0);
+
+
+											bl = true;
+											a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
+											lenght_ = (*oll).lenght;
+											itt = (*it).Event.erase(itt);
+											//eventManager.insertCar("CAR", 300, 10, SOUTHROAD);
+
+
+
+											//(*itt).topSpeed = 0;
+										}
+
+
+
+
+									}
+								}
+
+							}
+							
 					}
+					
+					
+
+
+
 				}
 				
 				
