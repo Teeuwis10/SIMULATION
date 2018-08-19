@@ -1,5 +1,6 @@
 #include "RoadEvent.h"
 #include "Road.h"
+#include <iostream>
 
 
 
@@ -44,10 +45,13 @@ RoadEvent::RoadEvent(std::string name, int position, int lenght)
 
 }*/
 
-void RoadEvent::Drive() {
-	position++;
+void RoadEvent::Drive(int a) {
+	//std::cout << "Jade" << std::endl;
+	
+	position=position+a;
 
 }
+
 /*void RoadEvent::Drive(Road* road) {
 	position++;
 

@@ -23,7 +23,10 @@ void RoadLine::RoadLinePrint()
 	{
 		if((*it).name=="CAR")
 		{
-			tmp[(*it).position] = '>';
+			//tmp[(*it).position] = '>';
+			for (int i = 0; i < (*it).lenght; i++) {
+				tmp[(*it).position + i ] = '>';
+			}
 		}
 		if ((*it).name == "START")
 		{

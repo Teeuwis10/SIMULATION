@@ -8,7 +8,7 @@
 #include <chrono>
 #include <memory>
 #include <random>
-
+#include "RoadEvent.h"
 
 Tools::Tools()
 {
@@ -22,7 +22,27 @@ int Tools::RandF(int min, int max)
 
 	return di(rng);
 }
-
+int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
+{
+	if (Event2.position>Event1.position)
+	{
+		int a = Event2.position- (Event1.position + Event1.lenght)  ;
+		if (a > 0) {
+			return a;
+		}
+		else return 0;
+		
+		
+	}
+	else
+	{
+		int a = Event1.position - (Event2.lenght + Event2.position);
+		if (a > 0) {
+			return a;
+		}
+		else return 0;
+	}
+};
 Tools::~Tools()
 {
 }

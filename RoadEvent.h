@@ -25,7 +25,7 @@ public:
 	RoadEvent(std::string name, int position, int lenght);
 	//RoadEvent(std::string name, int position, int lenght, Road& road);
 	//void Drive(Road* road);
-	void Drive();
+	void Drive(int a);
 	~RoadEvent();
 };
 
