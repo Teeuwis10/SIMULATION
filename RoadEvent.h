@@ -23,6 +23,7 @@ public:
 
 	RoadEvent(std::string name, int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance);
 	RoadEvent(std::string name, int position, int lenght);
+	RoadEvent();
 	//RoadEvent(std::string name, int position, int lenght, Road& road);
 	//void Drive(Road* road);
 	void Drive(int a);

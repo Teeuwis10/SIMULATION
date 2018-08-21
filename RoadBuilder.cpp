@@ -33,8 +33,9 @@ Road RoadBuilder::BuildEast()
 
 	std::vector<RoadEvent> firstLeftLineEvents;
 
-	firstLeftLineEvents.push_back(RoadEvent("START",99, 0));
-	firstLeftLineEvents.push_back(RoadEvent("END",0, 0));
+	firstLeftLineEvents.push_back(RoadEvent("START",0, 0));
+	firstLeftLineEvents.push_back(RoadEvent("CROSS",500, 0));
+	firstLeftLineEvents.push_back(RoadEvent("END", 999, 0));
 
 
 	leftLines.push_back(RoadLine(firstLeftLineEvents));
@@ -63,9 +64,9 @@ Road RoadBuilder::BuildSouth()
 
 	std::vector<RoadEvent> firstLeftLineEvents;
 
-	firstLeftLineEvents.push_back(RoadEvent("START", 999, 0));
+	firstLeftLineEvents.push_back(RoadEvent("START", 0, 0));
 	firstLeftLineEvents.push_back(RoadEvent("CROSS", 500, 0));
-	firstLeftLineEvents.push_back(RoadEvent("END", 0, 0));
+	firstLeftLineEvents.push_back(RoadEvent("END", 999, 0));
 
 
 	leftLines.push_back(RoadLine(firstLeftLineEvents));

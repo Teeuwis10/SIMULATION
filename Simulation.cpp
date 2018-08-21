@@ -2,11 +2,15 @@
 #include "RoadBuilder.h"
 #include "Road.h"
 #include "ParamHolder.h"
+#include <iterator>
 #include <vector>
 #include "RoadLine.h"
 #include "RoadEvent.h"
 #include "EventManager.h"
 #include "Tools.h"
+#include <iostream>
+#include <vector>
+#include <iomanip>
 Simulation::Simulation()
 {
 }
@@ -19,87 +23,70 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	Road SOUTHROAD = tmp.BuildSouth();
 	EventManager eventManager = EventManager();
 
-
+/////////////////////////////////////////////////dodawanie samochod do drogi/////////////////////////////////////////
 	for (int j = 0; j< 10; j++)
 	{
-		eventManager.spawnCar("CAR", 0, 10,EASTROAD);
+		eventManager.spawnCar("CAR", 0, 10,EASTROAD,"RIGHT");
 	}
 	for (int j = 0; j< 10; j++)
 	{
-		eventManager.spawnCar("CAR", 0, 10, SOUTHROAD);
+		eventManager.spawnCar("CAR", 0, 10, SOUTHROAD, "RIGHT");
+	}
+	for (int j = 0; j< 10; j++)
+	{
+		eventManager.spawnCar("CAR", 0, 10, SOUTHROAD, "LEFT");
+	}
+	for (int j = 0; j< 10; j++)
+	{
+		eventManager.spawnCar("CAR", 0, 10, SOUTHROAD, "LEFT");
 	}
 	
 	while (true)
 	{
 
 		bool bl = false;
+//////////////////////////////////////////////////////iterator pasow/////////////////////////////////////////////////
 		for (std::vector<RoadLine>::iterator it = EASTROAD.rightLines.begin(); it != EASTROAD.rightLines.end(); it++)
 		{
 			int a = 0;
 			int lenght_ = 0;
-			std::cout << "EASTROAD" << std::endl;
+			
+			std::cout << "EASTROAD---------------------------------------------------------------------------------------EASTROAD" << std::endl;
+			std::cout << std::setw(10)<< "iterator"<< std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::endl;
+///////////////////////////////////////////////iterator po pasie/////////////////////////////////////////////////
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
-			
+				
 				int direction = Tool.RandF(0, 1);
-				//std::cout << "rand: " << direction << std::endl;
 				if ((*itt).name == "CAR")
 
 				{
 					
 						auto tmp = std::next(itt, 1);
-						
-						RoadEvent nextCar = *tmp;
 						RoadEvent nextEvent = *tmp;
 						RoadEvent currentEvent = *itt;
-						/*while (true)
+///////////////////////////////////////////jazda prosto////////////////////////////////////////////////////////////////////////////
+						if ( Tool.getDistance((*itt), nextEvent)+(*itt).curentSpeed >=15 )
 						{
 
-							if (nextEvent.name == "CAR")
-							{
-								a++;
-
-							}
-							else
-							{
-								auto rmp2 = std::next(itt, a);
-								nextEvent = *rmp2;
-								break;
-							}
-						}
-
-
-						//RoadEvent nextEvent
-
-						/*if (nextEvent.name == "CROSS")       // jedz prosto
-						{
-							auto tmp = std::next(itt, 2);
-							nextEvent = *tmp;
-						}*/
-
-						if ( Tool.getDistance((*itt), nextCar)+(*itt).curentSpeed >=15 )
-						{
-
-							if(direction == 1 && nextCar.name == "CROSS")
+							if(direction == 1 && nextEvent.name == "CROSS")
 							{
 								tmp = std::next(itt, 2);
-								nextCar = *tmp;
+								nextEvent = *tmp;
 							}
-							if (Tool.getDistance(currentEvent, nextCar) > 0 )
+							if (Tool.getDistance(currentEvent, nextEvent) > 0 )
 							{
-								if (Tool.getDistance(currentEvent, nextCar) + (*itt).curentSpeed > (*itt).safeDistance)
+								if (Tool.getDistance(currentEvent, nextEvent) + (*itt).curentSpeed > (*itt).safeDistance)
 
 								{
 									if ((*itt).curentSpeed < (*itt).topSpeed)
 									{
 										(*itt).curentSpeed++;
 									}
-
-
 								}
 								else if ((*itt).curentSpeed > 0) (*itt).curentSpeed--;
 
-								if ((*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextCar.position)
+								if ((*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextEvent.position)
 								{
 									(*itt).curentSpeed = 0;
 								}
@@ -109,12 +96,12 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							}
 							
 						}
-						std::cout << "current event: " << currentEvent.position << ", distance to next" << Tool.getDistance(currentEvent, nextEvent) << std::endl;
-						//std::cout << "DZIAM ________________________________________________________________" << std::endl;
-						if (nextEvent.name == "CROSS" && Tool.getDistance((*itt), nextEvent)+(*itt).curentSpeed < 15 && direction == 0)       // jedz w prawo
+						
+////////////////////////////////////////////logika skretu w prawo///////////////////////////////////////////////////////////////
+						if (nextEvent.name == "CROSS" && Tool.getDistance((*itt), nextEvent)+(*itt).curentSpeed < 15 && direction == 0)       // jedz w lewo
 						{
 							
-
+							///////iterator po drodze w ktora skreca samochod//////////////////////////
 							for (std::vector<RoadLine>::iterator ol = SOUTHROAD.rightLines.begin(); ol != SOUTHROAD.rightLines.end(); ol++)
 							{
 
@@ -130,91 +117,52 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 										RoadEvent prevEvent = *tmp;
 										RoadEvent nextEvent1 = *tmp2;
 										std::cout << "samochod z pierwszenstwem" << (*tmp).position << std::endl;
-										if (prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 > (*oll).position && Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+										if ((prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 > (*oll).position && Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+											&&(Tool.turnLeftPrediction((*itt),nextEvent,prevEvent,(*oll))==true)
+											)
 										{
 											(*itt).curentSpeed = 0;
 
 										}
 										else
 										{
-											//EASTROAD.rightLines.at(0).Event.erase(itt);
-											//(*itt).curentSpeed = 5;
-											//SOUTHROAD.rightLines.at(0).Event.insert(oll,eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD ;
-											//eventManager.spawnCar("CAR" , std::abs((*itt).curentSpeed+(*itt).position-nextEvent.position)+(*oll).position,(*itt).lenght, SOUTHROAD) ;
-											//SOUTHROAD.rightLines.at(0).Event.insert(oll, *(itt));
-											//(*ol).Event.insert(itt, 0);
-
-
 											bl = true;
 											a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
 											lenght_ = (*oll).lenght;
 											itt = (*it).Event.erase(itt);
-											//eventManager.insertCar("CAR", 300, 10, SOUTHROAD);
-
-
-
-											//(*itt).topSpeed = 0;
+											
 										}
-
-
-
 
 									}
 								}
 
 							}
-							
-					}
-					
-					
-
-
-
+						}
+						auto index = std::distance((*it).Event.begin(), itt);
+						std::cout <<std::setw(20)<< index <<std::setw(20) << currentEvent.position << std::setw(20) << Tool.getDistance(currentEvent, nextEvent) << std::endl;
 				}
 				
-				
-				
 			}
+/////////////////////////////dalej logika skretu w prawo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
 			if (bl == true)
 			{
-
-
-
-
-				//eventManager.spawnCar("CAR", 300, 10, SOUTHROAD);
-				//eventManager.insertCar("CAR", 300, 10, SOUTHROAD);
 				//eventManager.insertCar("CAR", a, lenght_, SOUTHROAD);
 				eventManager.insertCar("CAR", 550, 10, SOUTHROAD);
 
-
-
 			}
 			bl = false;
-		//	(*it).Event.erase(((*it).Event.begin()));
 			(*it).RoadLinePrint();
 
-			
 		}
 		
 		for (std::vector<RoadLine>::iterator tu = SOUTHROAD.rightLines.begin(); tu != SOUTHROAD.rightLines.end(); tu++)
 		{
-			std::cout << "size: " << (*tu).Event.size() << std::endl;
-			for (std::vector<RoadEvent>::iterator tuu = (*tu).Event.begin(); tuu != (*tu).Event.end(); tuu++)
-			{
-
-				std::cout << "druga tablica: " << (*tuu).position << std::endl;
-			}
-			std::cout << "SOUTHROAD"  << std::endl;
+			
+			std::cout << "SOUTHROAD|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||SOUTHROAD"  << std::endl;
+			std::cout << std::setw(10) << "iterator" << std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::endl;
 			for (std::vector<RoadEvent>::iterator tuu= (*tu).Event.begin(); tuu != (*tu).Event.end(); tuu++)
 			{
 				
-				for (std::vector<RoadLine>::iterator tu = SOUTHROAD.rightLines.begin(); tu != SOUTHROAD.rightLines.end(); tu++)
-				{
-				//	std::cout << "SOUTHROAD" << std::endl;
-					
-				}
-
-
 				if ((*tuu).name == "CAR")
 
 				{
@@ -242,23 +190,20 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 						else if ((*tuu).curentSpeed>0) (*tuu).curentSpeed--;
 
 						if ((*tuu).position + (*tuu).lenght + (*tuu).curentSpeed + 2 > nextEvent.position)
-						{
-							(*tuu).curentSpeed = 0;
-						}
+							{
+								(*tuu).curentSpeed = 0;
+							}
 
 						(*tuu).Drive((*tuu).curentSpeed);
 
 					}
-					std::cout << "current event: " << currentEvent.position << ", distance to next" << Tool.getDistance(currentEvent, nextEvent) << std::endl;
+					auto index = std::distance((*tu).Event.begin(), tuu);
+					std::cout << std::setw(20) << index << std::setw(20) << currentEvent.position << std::setw(20) << Tool.getDistance(currentEvent, nextEvent) << std::endl;
 
 				}
 				
-
-
-
 			}
 			(*tu).RoadLinePrint();
-
 
 		}
 	}

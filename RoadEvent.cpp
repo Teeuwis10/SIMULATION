@@ -36,6 +36,12 @@ RoadEvent::RoadEvent(std::string name, int position, int lenght)
 
 
 }
+RoadEvent::RoadEvent()
+{
+	
+
+
+}
 /*RoadEvent::RoadEvent(std::string name, int position, int lenght , Road& road)
 {
 	this->name = name;

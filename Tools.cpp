@@ -43,6 +43,41 @@ int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
 		else return 0;
 	}
 };
+///////////////////////////jesli prawda do zdazy przejechac przed samochodem z naprzeciwka//////////////////////////////////
+bool Tools::turnLeftPrediction(RoadEvent goingLeft, RoadEvent goingLeftCross, RoadEvent goingStright, RoadEvent goingStrightCross)
+{
+	int unitsToGo = goingLeftCross.position - goingLeft.position + 10;
+	int unitsToGo1 = goingStrightCross.position - goingStright.position + 10;
+	int time1 = 0;
+	int time2 = 0;
+	int pos =0;
+	for (; unitsToGo > pos; time1++)
+	{
+		pos += goingLeft.curentSpeed;
+		
+		goingLeft.curentSpeed += goingLeft.currentAcc;
+			if(goingLeft.curentSpeed > goingLeft.topSpeed)
+			{
+				goingLeft.curentSpeed = goingLeft.topSpeed;
+			}
+	}
+	for (; unitsToGo1 > pos; time2++)
+	{
+		pos += goingStright.curentSpeed;
+		
+		goingStright.curentSpeed += goingStright.currentAcc;
+		if (goingStright.curentSpeed > goingStright.topSpeed)
+		{
+			goingStright.curentSpeed = goingStright.topSpeed;
+		}
+	}
+	if (time1 < time2)
+	{
+		return true;
+	}
+	else return false;
+}
+
 Tools::~Tools()
 {
 }

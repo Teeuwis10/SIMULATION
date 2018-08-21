@@ -1,7 +1,10 @@
 #include "RoadLine.h"
 #include <vector>
 #include <iostream>
+#include <cstdlib>
 #include "RoadEvent.h"
+#include <stdlib.h>
+#include <iostream>
 
 RoadLine::RoadLine(std::vector<RoadEvent>& Event) {
 
@@ -52,7 +55,10 @@ void RoadLine::RoadLinePrint()
 	//	for (std::vector<int>::iterator it = tmp.begin(); it != tmp.end(); it++) {}
 
 	std::cout << std::endl;
-	system("pause");
+	
+		
+		system("pause");
+		std::cout << "\033[2J\033[1;1H";
 };
 
 RoadLine::~RoadLine()
