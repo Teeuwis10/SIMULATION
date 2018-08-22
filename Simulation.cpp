@@ -153,7 +153,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			(*it).RoadLinePrint();
 
 		}
-		///////////////////////////////////////lewy pas EASTROAD//////////////////////////////////////////////////////////////////
+		/*///////////////////////////////////////lewy pas EASTROAD//////////////////////////////////////////////////////////////////
 		bool b2 = false; 
 
 		//////////////////////////////////////////////////////iterator pasow /////////////////////////////////////////////////
@@ -255,6 +255,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 				}
 
 			}
+
 			/////////////////////////////dalej logika skretu w prawo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
 			if (b2 == true)
 			{
@@ -264,9 +265,9 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			}
 			b2 = false;
 			(*it).RoadLinePrint();
-
-		}
 		
+		}
+		*/
 		for (std::vector<RoadLine>::iterator tu = SOUTHROAD.rightLines.begin(); tu != SOUTHROAD.rightLines.end(); tu++)
 		{
 			
