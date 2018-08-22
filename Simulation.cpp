@@ -53,7 +53,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			
 			std::cout << "EASTROAD---------------------------------------------------------------------------------------EASTROAD" << std::endl;
 			std::cout << std::setw(10)<< "iterator"<< std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::endl;
-///////////////////////////////////////////////iterator po pasie/////////////////////////////////////////////////
+///////////////////////////////////////////////iterator eventow na pasie/////////////////////////////////////////////////
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
 				
@@ -167,16 +167,19 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 
 				{
 					auto tmp = std::next(tuu, 1);
+					
 					RoadEvent nextEvent = *tmp;
+					
 					RoadEvent currentEvent = *tuu;
-
+					if (nextEvent.name == "CROSS"&&currentEvent.position>nextEvent.position)
+					{
+						tmp = std::next(tuu, 2);
+						nextEvent = *tmp;
+					}
 
 					if (Tool.getDistance(currentEvent, nextEvent)>0)
 					{
-						if (nextEvent.name == "RIGHT")
-						{
-
-						}
+						
 						if (Tool.getDistance(currentEvent, nextEvent) + (*tuu).curentSpeed > (*tuu).safeDistance)
 
 						{
@@ -198,7 +201,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 
 					}
 					auto index = std::distance((*tu).Event.begin(), tuu);
-					std::cout << std::setw(20) << index << std::setw(20) << currentEvent.position << std::setw(20) << Tool.getDistance(currentEvent, nextEvent) << std::endl;
+					std::cout << std::setw(20) << index << std::setw(20) << currentEvent.position << std::setw(20) << Tool.getDistance(currentEvent, nextEvent) <<nextEvent.name<< std::endl;
 
 				}
 				
