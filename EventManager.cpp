@@ -30,27 +30,47 @@ void EventManager::spawnCar(std::string name, int position, int lenght, Road& ro
 		it++;
 		auto rng = Tools();
 		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+	
+	//	std::cout << road.leftLines.at(0).Event.at(3).name << std::endl;
+		
 
 	}
 
 
 }
 
-void EventManager::insertCar( std::string name, int position, int lenght, Road& road) {
-	std::vector<RoadEvent>::iterator it = road.rightLines.at(0).Event.begin();
-	for (; it != road.rightLines.at(0).Event.end(); it++)
-	{
-		if ((*it).name == "CROSS")
+void EventManager::insertCar( std::string name, int position, int lenght, Road& road, std::string side) {
+	if (side == "RIGHT") {
+		std::vector<RoadEvent>::iterator it = road.rightLines.at(0).Event.begin();
+		for (; it != road.rightLines.at(0).Event.end(); it++)
 		{
-			break;
-			
-		}
-		
-	}
-	auto rng = Tools();
-	//it++;
-	road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+			if ((*it).name == "CROSS")
+			{
+				break;
 
+			}
+
+		}
+		auto rng = Tools();
+		//it++;
+		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+	}else
+	{
+		std::vector<RoadEvent>::iterator it = road.leftLines.at(0).Event.begin();
+		for (; it != road.rightLines.at(0).Event.end(); it++)
+		{
+			if ((*it).name == "CROSS")
+			{
+				break;
+
+			}
+
+		}
+		auto rng = Tools();
+		//it++;
+		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+
+	}
 
 }
 
