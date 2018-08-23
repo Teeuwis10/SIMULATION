@@ -9,6 +9,8 @@
 #include <memory>
 #include <random>
 #include "RoadEvent.h"
+#include <iomanip>
+#include <windows.h>
 
 Tools::Tools()
 {
@@ -23,12 +25,23 @@ int Tools::RandF(int min, int max)
 	return di(rng);
 }
 int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
-{
+{	
+	//std::cout << std::setw(20) << Event1.position + Event1.lenght << " " << Event1.name << std::setw(20) <<  Event2.position << " " << Event2.name << std::endl;
+	if(Event1.name == "CROSS" || Event2.name == "CROSS")
+	{
+	//	std::cout << "Event1: " << Event1.position << "Event2: " << Event2.position << std::endl;
+	}
 	if (Event2.position>Event1.position)
 	{
 		int a = Event2.position- (Event1.position + Event1.lenght)  ;
 		if (a > 0) {
+			if (Event1.name == "CROSS" || Event2.name == "CROSS")
+			{
+			//	std::cout << "wyniki tej ciezkiej matematyki: " << a << std::endl;
+			}
+			
 			return a;
+
 		}
 		else return 0;
 		
@@ -38,6 +51,11 @@ int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
 	{
 		int a = Event1.position - (Event2.lenght + Event2.position);
 		if (a > 0) {
+			
+			if (Event1.name == "CROSS" || Event2.name == "CROSS")
+			{
+				std::cout << "wyniki tej ciezkiej matematyki: " << a << std::endl;
+			}
 			return a;
 		}
 		else return 0;
