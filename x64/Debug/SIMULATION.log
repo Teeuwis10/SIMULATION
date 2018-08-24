@@ -1,4 +1,2 @@
-﻿  RoadLine.cpp
-c:\users\raven\source\repos\simulation\simulation\roadline.cpp(35): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-c:\users\raven\source\repos\simulation\simulation\roadline.cpp(43): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+﻿  Simulation.cpp
   SIMULATION.vcxproj -> C:\Users\raven\source\repos\SIMULATION\x64\Debug\SIMULATION.exe

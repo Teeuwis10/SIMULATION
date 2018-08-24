@@ -8,32 +8,59 @@
 #include "Tools.h"
 #include <iomanip>
 #include <iterator>
-RoadLine::RoadLine(std::vector<RoadEvent>& Event) {
+#include <Windows.h>
+#include "ConsolColor.h"
+RoadLine::RoadLine(std::string roadName, std::string lineName,std::vector<RoadEvent>& Event) {
 
 	this->Event = Event;
+	this->roadName = roadName;
+	this->lineName = lineName;
 }
 
-void RoadLine::RoadLinePrint()
-{
+void RoadLine::RoadLinePrint(ConsolColor Color)
+{	
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	switch (Color)
+	{
+	case::ConsolColor::GREEN:
+		SetConsoleTextAttribute(hConsole, 10);
+		break;
+	case::ConsolColor::RED:
+		SetConsoleTextAttribute(hConsole, 12);
+		break;
+	case::ConsolColor::BLUE:
+		SetConsoleTextAttribute(hConsole, 9);
+		break;
+	case::ConsolColor::YELLOW:
+		SetConsoleTextAttribute(hConsole, 14);
+		break;
+	case::ConsolColor::WHITE:
+		SetConsoleTextAttribute(hConsole, 15);
+		break;
+	}
 	std::vector<RoadEvent>::iterator itt = Event.end();
 	itt--;
 	int lenght = (*itt).position+1;
 	Tools Tool = Tools();
 	
-	//int * tmp = new int[lenght];
-	//std::fill_n(tmp, lenght, 0);
+	std::cout << "-----------------------------------"<<roadName<<"---"<< lineName <<"----------------------------------------------------" << std::endl;
+	std::cout << std::setw(10) << "iterator" << std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::setw(5) << "speed" << std::setw(5) << "acc" << std::setw(5) <<"lenght"  << std::endl;
+	
 
 	std::vector<char> tmp(lenght, '-');
 
 	for (std::vector<RoadEvent>::iterator it = Event.begin(); it != Event.end(); it++)
 	{
+		
 		if((*it).name == "END")
 		{
 			auto tmp2 = std::next(it, 0);
 
 			RoadEvent nextEvent = *tmp2;
 			int index = std::distance(Event.begin(), it);
-			std::cout << std::setw(10) << index << std::setw(20) << (*it).position << std::setw(20) << (*it).lenght << " " << (*it).name << std::setw(20) << Tool.getDistance((*it), nextEvent) << " " << nextEvent.name << std::endl;
+			std::cout << std::setw(6) << index << " " << std::setw(5) << (*it).name << std::setw(10) << (*it).position << std::setw(20) << Tool.getDistance((*it), nextEvent)
+				<< " " << std::setw(5) << nextEvent.name << std::setw(5) << (*it).curentSpeed << std::setw(5) << (*it).currentAcc << std::setw(5) << (*it).lenght << std::endl;
 		}
 		else
 		{
@@ -41,14 +68,13 @@ void RoadLine::RoadLinePrint()
 
 			RoadEvent nextEvent = *tmp2;
 			int index = std::distance(Event.begin(), it);
-			std::cout << std::setw(10) << index << std::setw(20) << (*it).position << std::setw(20) << (*it).lenght << " " << (*it).name << std::setw(20) << Tool.getDistance((*it), nextEvent) << " " << nextEvent.name << std::endl;
+			std::cout << std::setw(6) << index << " " << std::setw(5)<< (*it).name << std::setw(10) << (*it).position << std::setw(20) << Tool.getDistance((*it), nextEvent)
+				<< " " << std::setw(5) << nextEvent.name << std::setw(5) << (*it).curentSpeed << std::setw(5) << (*it).currentAcc << std::setw(5) << (*it).lenght <<   std::endl;
 		}
-		//std::cout <<"rozmiar w roadliene print : "<< index1 << std::endl; 
-		//std::cout << "rozmiar w roadliene print : " << index2 << std::endl;
-		//int index1 = std::distance((*it).Event.begin(), (*it).Event.end());
+		
 		if((*it).name=="CAR")
 		{
-			//tmp[(*it).position] = '>';
+			
 			for (int i = 0; i < (*it).lenght; i++) {
 				tmp[(*it).position + i ] = '>';
 			}
@@ -66,19 +92,16 @@ void RoadLine::RoadLinePrint()
 		{
 			tmp[(*it).position] = 'C';
 		}
-		
-
 	}
 
 	for (int i = 0; i < lenght; i++)
 	{
 		std::cout << tmp[i];
 	}
-	//	for (std::vector<int>::iterator it = tmp.begin(); it != tmp.end(); it++) {}
-
+	
 	std::cout << std::endl;
 	
-		
+		SetConsoleTextAttribute(hConsole, 15);
 		system("pause");
 		std::cout << "\033[2J\033[1;1H";
 };

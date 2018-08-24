@@ -7,10 +7,11 @@
 
 
 
-Road::Road(std::vector<RoadLine>& rightLines, std::vector<RoadLine>& leftLines)
+Road::Road(std::string name, std::vector<RoadLine>& rightLines, std::vector<RoadLine>& leftLines)
 {
 	this->rightLines = rightLines;
 	this->leftLines = leftLines;
+	this->name = name;
 
 	
 }

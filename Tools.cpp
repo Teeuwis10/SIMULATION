@@ -26,25 +26,17 @@ int Tools::RandF(int min, int max)
 }
 int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
 {	
-	//std::cout << std::setw(20) << Event1.position + Event1.lenght << " " << Event1.name << std::setw(20) <<  Event2.position << " " << Event2.name << std::endl;
-	if(Event1.name == "CROSS" || Event2.name == "CROSS")
-	{
-	//	std::cout << "Event1: " << Event1.position << "Event2: " << Event2.position << std::endl;
-	}
+
 	if (Event2.position>Event1.position)
 	{
 		int a = Event2.position- (Event1.position + Event1.lenght)  ;
 		if (a > 0) {
-			if (Event1.name == "CROSS" || Event2.name == "CROSS")
-			{
-			//	std::cout << "wyniki tej ciezkiej matematyki: " << a << std::endl;
-			}
+			
 			
 			return a;
 
 		}
 		else return 0;
-		
 		
 	}
 	else
@@ -52,10 +44,6 @@ int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
 		int a = Event1.position - (Event2.lenght + Event2.position);
 		if (a > 0) {
 			
-			if (Event1.name == "CROSS" || Event2.name == "CROSS")
-			{
-				std::cout << "wyniki tej ciezkiej matematyki: " << a << std::endl;
-			}
 			return a;
 		}
 		else return 0;
@@ -95,7 +83,10 @@ bool Tools::turnLeftPrediction(RoadEvent goingLeft, RoadEvent goingLeftCross, Ro
 	}
 	else return false;
 }
-
+void Tools::driveStright(RoadEvent &currentCar, RoadEvent &nextCar)	
+{
+	
+}
 Tools::~Tools()
 {
 }

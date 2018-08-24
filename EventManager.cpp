@@ -20,7 +20,7 @@ void EventManager::spawnCar(std::string name, int position, int lenght, Road& ro
 		it = road.rightLines.at(0).Event.begin();
 		it++;
 		auto rng = Tools();
-		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(5, 10), rng.RandF(5, 10), rng.RandF(40, 80)));
 	}
 	if (side == "LEFT")
 	{
@@ -29,9 +29,9 @@ void EventManager::spawnCar(std::string name, int position, int lenght, Road& ro
 		it = road.leftLines.at(0).Event.begin();
 		it++;
 		auto rng = Tools();
-		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(5, 10), rng.RandF(5, 10), rng.RandF(80, 150)));
 	
-		//std::cout << road.leftLines.at(0).Event.at(3).name << std::endl;
+	
 		
 
 	}
@@ -52,9 +52,9 @@ void EventManager::insertCar( std::string name, int position, int lenght, Road& 
 
 		}
 		auto rng = Tools();
-		//it--;
-		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
-	//	it++;
+		
+		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(5, 10), rng.RandF(5, 10), rng.RandF(5, 15)));
+
 	}
 	if (side == "LEFT")
 	{
@@ -69,10 +69,9 @@ void EventManager::insertCar( std::string name, int position, int lenght, Road& 
 
 		}
 		auto rng = Tools();
-	//	it--;
-		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+	
+		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(5, 10), rng.RandF(5, 10), rng.RandF(5, 15)));
 		
-		//it++;
 	}
 
 }

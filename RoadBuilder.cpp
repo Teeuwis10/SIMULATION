@@ -15,8 +15,8 @@ RoadBuilder::RoadBuilder()
 RoadBuilder::~RoadBuilder()
 {
 }
-Road RoadBuilder::BuildEast()
-{
+Road RoadBuilder::BuildA2()
+{	//----------------------------A2----------------------------------------------------------------
 	Tools rand = Tools();
 	std::vector<RoadLine> rightLines;
 	std::vector<RoadLine> leftLines;
@@ -27,7 +27,7 @@ Road RoadBuilder::BuildEast()
 	firstRightLineEvents.push_back(RoadEvent("CROSS", 500, 0));
 	firstRightLineEvents.push_back(RoadEvent("END", 999, 0));
 	
-	rightLines.push_back(RoadLine(firstRightLineEvents));
+	rightLines.push_back(RoadLine("A2", "RIGHT 1", firstRightLineEvents));
 
 	//----------------------------Left Side------------------------------------------------------------
 
@@ -38,15 +38,13 @@ Road RoadBuilder::BuildEast()
 	firstLeftLineEvents.push_back(RoadEvent("END", 999, 0));
 
 
-	leftLines.push_back(RoadLine(firstLeftLineEvents));
+	leftLines.push_back(RoadLine("A2","LEFT 1", firstLeftLineEvents));
 	//------------------Creating Road------------------------------------
-	//	Road FirstRoad = Road(rightLines, leftLines);
-	//TEST FirstRoad = TEST(10,10);
-	Road FirstRoad = Road(rightLines, leftLines);
-	//TEST a = TEST(rand.RandF(1,2),rand.RandF(1,2));
-	return (FirstRoad);
+	Road Road_ = Road("A2",rightLines, leftLines);
+	
+	return (Road_);
 }
-Road RoadBuilder::BuildSouth()
+Road RoadBuilder::BuildA1()
 {
 	Tools rand = Tools();
 	std::vector<RoadLine> rightLines;
@@ -58,7 +56,7 @@ Road RoadBuilder::BuildSouth()
 	firstRightLineEvents.push_back(RoadEvent("CROSS", 500, 0));
 	firstRightLineEvents.push_back(RoadEvent("END", 999, 0));
 
-	rightLines.push_back(RoadLine(firstRightLineEvents));
+	rightLines.push_back(RoadLine("A1","RIGHT 1", firstRightLineEvents));
 
 	//----------------------------Left Side------------------------------------------------------------
 
@@ -69,11 +67,9 @@ Road RoadBuilder::BuildSouth()
 	firstLeftLineEvents.push_back(RoadEvent("END", 999, 0));
 
 
-	leftLines.push_back(RoadLine(firstLeftLineEvents));
+	leftLines.push_back(RoadLine("A1", "LEFT 1", firstLeftLineEvents));
 	//------------------Creating Road------------------------------------
-	//	Road FirstRoad = Road(rightLines, leftLines);
-	//TEST FirstRoad = TEST(10,10);
-	Road FirstRoad = Road(rightLines, leftLines);
-	//TEST a = TEST(rand.RandF(1,2),rand.RandF(1,2));
-	return (FirstRoad);
+	Road Road_ = Road("A1",rightLines, leftLines);
+	
+	return (Road_);
 }
