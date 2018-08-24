@@ -54,6 +54,7 @@ void EventManager::insertCar( std::string name, int position, int lenght, Road& 
 		auto rng = Tools();
 		//it--;
 		road.rightLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
+	//	it++;
 	}
 	if (side == "LEFT")
 	{
@@ -70,7 +71,8 @@ void EventManager::insertCar( std::string name, int position, int lenght, Road& 
 		auto rng = Tools();
 	//	it--;
 		road.leftLines.at(0).Event.insert(it, RoadEvent(name, position, lenght, rng.RandF(15, 25), 0, rng.RandF(2, 4), 0, rng.RandF(5, 10)));
-
+		
+		//it++;
 	}
 
 }
