@@ -60,6 +60,11 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 				direction = 1;						//do testowania
 				if ((*itt).name == "CAR")
 				{
+
+
+
+
+
 					auto tmp = std::next(itt, 1);
 					RoadEvent nextEvent = *tmp;
 					RoadEvent currentEvent = *itt;
@@ -87,7 +92,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							else if ((*itt).curentSpeed > 0)
 							{
 								int a = 0;
-								//(*itt).curentSpeed -= (*itt).currentAcc;
+								(*itt).curentSpeed -= (*itt).currentAcc;
 								if((*itt).curentSpeed<0)
 								{
 								(*itt).curentSpeed = 0;
@@ -98,7 +103,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							{
 								(*itt).curentSpeed = 0;
 							}
-							if (Tool.getDistance(currentEvent, nextEvent) + (*itt).curentSpeed > 1 && (*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextEvent.position)
+							if ((*itt).curentSpeed == 0 && (*itt).position + (*itt).lenght + (*itt).curentSpeed + 3 < nextEvent.position)
 
 							{
 								(*itt).curentSpeed = 2;
