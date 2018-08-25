@@ -48,7 +48,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	{
 		//////////////////////////////////////////////iterator pasow (przygotowane dla domyslnie jedenego pasa)//////////////////////////////////////////////////////////
 		bool bl = false;
-		
+		/////////////////////////////////////////////prawy pas A2 ////////////////////////////////////////////////////////////////////
 		for (std::vector<RoadLine>::iterator it = A2.rightLines.begin(); it != A2.rightLines.end(); it++)
 		{//zmienne samochodu do przeniesienia na inna liste(najlepiej byloby zamienic to na obiekt RoadEvent
 			int a = 0;
@@ -56,8 +56,10 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			///////////////////////////////////////////////iterator eventow na pasie/////////////////////////////////////////////////
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
-				int direction = Tool.RandF(0, 1);   //pozniej tutaj funkcja sterujaca zachowaniem samochodow na skrzyzowaniu
-				direction = 1;						//do testowania
+				int direction = Tool.RandF(0, 1);   //pozniej tutaj funkcja sterujaca zachowaniem samochodow na skrzyzowaniu // 
+													// 0 - prosto z pierszenswtwem
+													// 1 - skret w lewo
+				direction = 0;						//do testowania
 				if ((*itt).name == "CAR")
 				{
 
@@ -89,10 +91,11 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 									(*itt).curentSpeed+=(*itt).currentAcc;
 								}
 							}
-							else if ((*itt).curentSpeed > 0)
+							else if ((*itt).curentSpeed > 6)
 							{
 								int a = 0;
-								(*itt).curentSpeed -= (*itt).currentAcc;
+								//(*itt).curentSpeed -= (*itt).currentAcc;
+								(*itt).curentSpeed -= 2;
 								if((*itt).curentSpeed<0)
 								{
 								(*itt).curentSpeed = 0;
@@ -106,7 +109,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							if ((*itt).curentSpeed == 0 && (*itt).position + (*itt).lenght + (*itt).curentSpeed + 3 < nextEvent.position)
 
 							{
-								(*itt).curentSpeed = 2;
+								(*itt).curentSpeed = 6;
 							}
 							(*itt).Drive((*itt).curentSpeed);
 							if (cross == true && (*itt).position+(*itt).curentSpeed>=(*std::next(itt, 1)).position)
@@ -118,8 +121,9 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							
 					}
 					////////////////////////////////////////////logika skretu w lewo///////// jesli sie da zapakowac do fukcji///////////////
-					if (nextEvent.name == "CROSS" && Tool.getDistance((*itt), nextEvent)+(*itt).curentSpeed < 15 && direction == 0)
+					if (nextEvent.name == "CROSS" && currentEvent.position+currentEvent.lenght+(*itt).curentSpeed + 10 > nextEvent.position && direction == 0)
 					{
+						
 					///////iterator po drodze w ktora skreca samochod//////////////////////////
 						for (std::vector<RoadLine>::iterator ol = A1.rightLines.begin(); ol != A1.rightLines.end(); ol++)
 						{
@@ -127,24 +131,62 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							{
 								if ((*oll).name == "CROSS")
 								{
+
 									auto tmp = std::next(oll, -1);
 									auto tmp2 = std::next(oll, 1);
 									RoadEvent prevEvent = *tmp;
 									RoadEvent nextEvent1 = *tmp2;
 									std::cout << "samochod z pierwszenstwem" << (*tmp).position << std::endl;
-									if ((prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3
-										> (*oll).position && Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
-										&&(Tool.turnLeftPrediction((*itt),nextEvent,prevEvent,(*oll))==true))
+									
+									
+									if (((prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 >(*oll).position && (Tool.getDistance((*oll), nextEvent1))
+										> (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))))
 									{
-										(*itt).curentSpeed = 0;
+										for (std::vector<RoadLine>::iterator jk = A2.leftLines.begin(); jk != A2.leftLines.end(); jk++)
+										{
+											for (std::vector<RoadEvent>::iterator jkk = (*jk).Event.begin(); jkk != (*jk).Event.end(); jkk++)
+											{
+												if ((*jkk).name == "CROSS")
+												{
+													/*if (prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3 > (*jkk).position)
+													{
+														std::cout << "dzialam 1" << std::endl;
+													}
+
+													if (Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+													{
+														std::cout << "dzialam 2" << std::endl;
+													}
+
+													if (Tool.turnLeftPrediction((*itt), nextEvent, prevEvent, (*oll)) == false)
+													{
+														std::cout << "dzialam 3" << std::endl;
+													}*/
+													auto tmpin = std::next(jkk, -1);
+													auto tmp2in = std::next(jkk, 1);
+													RoadEvent prevEventin = *tmpin;
+													RoadEvent nextEvent1in = *tmp2in;
+													if (Tool.turnLeftPrediction((*itt), nextEvent, prevEventin, (*jkk)) == false)
+													{
+														std::cout << "nie moge wjechac na: A1 prawy pas" << std::endl;
+
+														(*itt).curentSpeed = 0;
+													}
+													else
+													{
+														std::cout << "wjezdzam na: A1 prawy pas" << std::endl;
+														bl = true;
+														a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
+														lenght_ = (*itt).lenght;
+														itt = (*it).Event.erase(itt);
+													}
+												}
+											}
+										}
+										
 									}
-									else
-									{
-										bl = true;
-										a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
-										lenght_ = (*itt).lenght;
-										itt = (*it).Event.erase(itt);
-									}
+									
+									
 								}
 							}
 						}
@@ -161,7 +203,138 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			}
 			bl = false;
 		}
-		///////////////////////////////////////lewy pas EASTROAD//////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////iterator pasow (przygotowane dla domyslnie jedenego pasa)//////////////////////////////////////////////////////////
+		bool b3 = false;
+		/////////////////////////////////////////////prawy pas A1////////////////////////////////////////////////////
+		for (std::vector<RoadLine>::iterator it = A1.rightLines.begin(); it != A1.rightLines.end(); it++)
+		{//zmienne samochodu do przeniesienia na inna liste(najlepiej byloby zamienic to na obiekt RoadEvent
+			int a = 0;
+			int lenght_ = 0;
+			///////////////////////////////////////////////iterator eventow na pasie/////////////////////////////////////////////////
+			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
+			{
+				int direction = Tool.RandF(0, 1);   //pozniej tutaj funkcja sterujaca zachowaniem samochodow na skrzyzowaniu // 
+													// 0 - prosto z pierszenswtwem
+													// 1 - skret w lewo
+				direction = 1;						//do testowania
+				if ((*itt).name == "CAR")
+				{
+
+
+
+
+
+					auto tmp = std::next(itt, 1);
+					RoadEvent nextEvent = *tmp;
+					RoadEvent currentEvent = *itt;
+					///////////////////////////////////////////jazda prosto z pierwszenstwem//// pozniej zamienic to w funkcje////////////////////////////////////////////////////////////////////////////
+					if (Tool.getDistance((*itt), nextEvent) + (*itt).curentSpeed >= 2)
+					{
+						bool cross = false;
+						if (direction == 1 && nextEvent.name == "CROSS")
+						{
+
+							tmp = std::next(itt, 2);
+							nextEvent = *tmp;
+							cross = true;
+						}
+						if (Tool.getDistance(currentEvent, nextEvent) > 0)
+						{
+							if (Tool.getDistance(currentEvent, nextEvent) + (*itt).curentSpeed > (*itt).safeDistance)
+
+							{
+								if ((*itt).curentSpeed < (*itt).topSpeed)
+								{
+									(*itt).curentSpeed += (*itt).currentAcc;
+								}
+							}
+							else if ((*itt).curentSpeed > 6)
+							{
+								int a = 0;
+								//(*itt).curentSpeed -= (*itt).currentAcc;
+								(*itt).curentSpeed -= 2;
+								if ((*itt).curentSpeed<0)
+								{
+									(*itt).curentSpeed = 0;
+								}
+							}
+
+							if ((*itt).position + (*itt).lenght + (*itt).curentSpeed + 2 > nextEvent.position)
+							{
+								(*itt).curentSpeed = 0;
+							}
+							if ((*itt).curentSpeed == 0 && (*itt).position + (*itt).lenght + (*itt).curentSpeed + 3 < nextEvent.position)
+
+							{
+								(*itt).curentSpeed = 6;
+							}
+							//(*itt).Drive((*itt).curentSpeed);
+							if (cross == true && (*itt).position + (*itt).curentSpeed >= (*std::next(itt, 1)).position)
+							{
+								//iter_swap(itt, std::next(itt, 1));
+								//cross = false;
+								(*itt).curentSpeed = 0;
+							}else { (*itt).Drive((*itt).curentSpeed); }
+							
+						}
+
+					}
+					////////////////////////////////////////////logika skretu w lewo///////// jesli sie da zapakowac do fukcji///////////////
+					if (nextEvent.name == "CROSS" && currentEvent.position + currentEvent.lenght + (*itt).curentSpeed + 10 > nextEvent.position && direction == 0)
+					{
+
+						///////iterator po drodze w ktora skreca samochod//////////////////////////
+						for (std::vector<RoadLine>::iterator ol = A2.leftLines.begin(); ol != A2.leftLines.end(); ol++)
+						{
+							for (std::vector<RoadEvent>::iterator oll = (*ol).Event.begin(); oll != (*ol).Event.end(); oll++)
+							{
+								if ((*oll).name == "CROSS")
+								{
+									auto tmp = std::next(oll, -1);
+									auto tmp2 = std::next(oll, 1);
+									RoadEvent prevEvent = *tmp;
+									RoadEvent nextEvent1 = *tmp2;
+									std::cout << "samochod z pierwszenstwem" << (*tmp).position << std::endl;
+									if ((prevEvent.position + prevEvent.lenght + prevEvent.curentSpeed + 3
+										> (*oll).position && Tool.getDistance((*oll), nextEvent1) < (10 + (*itt).lenght + (*itt).curentSpeed + (*itt).safeDistance))
+										&& (Tool.turnLeftPrediction((*itt), nextEvent, prevEvent, (*oll)) == true))
+									{
+										std::cout << "nie moge wjechac" << std::endl;
+										(*itt).curentSpeed = 0;
+									}
+
+									if ((*itt).position + (*itt).lenght + (*itt).curentSpeed > (*oll).position)
+									{
+										b3 = true;
+										a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
+										lenght_ = (*itt).lenght;
+										itt = (*it).Event.erase(itt);
+									}
+									else
+									{
+										int a = (*itt).curentSpeed + (*itt).currentAcc;
+										if (a > (*itt).topSpeed) {
+											(*itt).curentSpeed = (*itt).topSpeed;
+										}
+										(*itt).Drive((*itt).curentSpeed);
+									}
+								}
+							}
+						}
+					}
+
+				}
+
+			}
+			//(*it).RoadLinePrint(ConsolColor::GREEN);
+			/////////////////////////////dalej logika skretu w lewo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
+			if (b3 == true)
+			{
+				eventManager.insertCar("CAR", a, lenght_, A1, "RIGHT");
+			}
+			b3 = false;
+		}
+		///////////////////////////////////////lewy pas A2//////////////////////////////////////////////////////////////////
 		/////////////////////////////////////	iterator pasow /////////////////////////////////////////////////
 		bool b2 = false; 
 	
@@ -176,7 +349,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			{
 			
 				int direction = Tool.RandF(0, 1);
-				
+				 direction = 1;
 				if ((*itt).name == "CAR")
 
 				{
@@ -188,11 +361,20 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 					if (Tool.getDistance((*itt), nextEvent) + (*itt).curentSpeed >= 15)
 					{
 
-						if (direction == 1 && nextEvent.name == "CROSS")
+					if (direction == 1 && nextEvent.name == "CROSS" &&Tool.getDistance(currentEvent, nextEvent)< 30)
 						{
 							tmp = std::next(itt, 2);
 							nextEvent = *tmp;
+							(*itt).curentSpeed = 0  ;
 						}
+					else {
+						/*if (direction == 1 && nextEvent.name == "CROSS" &&Tool.getDistance(currentEvent, nextEvent)< 20)
+						{
+						tmp = std::next(itt, 2);
+						nextEvent = *tmp;
+						(*itt).curentSpeed = 30;
+						}
+						else {*/
 						if (Tool.getDistance(currentEvent, nextEvent) > 0)
 						{
 							if (Tool.getDistance(currentEvent, nextEvent) + (*itt).curentSpeed > (*itt).safeDistance)
@@ -213,6 +395,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 							(*itt).Drive((*itt).curentSpeed);
 
 						}
+					}
 
 					}
 
@@ -263,7 +446,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 				}
 
 			}
-			//(*it).RoadLinePrint(ConsolColor::BLUE);
+			
 			/////////////////////////////dalej logika skretu w prawo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
 			if (b2 == true)
 			{
@@ -273,7 +456,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 
 			}
 			b2 = false;
-		
+			(*it).RoadLinePrint(ConsolColor::BLUE);
 		
 		}
 		

@@ -52,6 +52,7 @@ int Tools::getDistance(RoadEvent Event1, RoadEvent Event2)
 ///////////////////////////jesli prawda do zdazy przejechac przed samochodem z naprzeciwka//////////////////////////////////
 bool Tools::turnLeftPrediction(RoadEvent goingLeft, RoadEvent goingLeftCross, RoadEvent goingStright, RoadEvent goingStrightCross)
 {
+	std::cout <<"goingStright.position: " <<goingStright.position << std::endl;
 	int unitsToGo = goingLeftCross.position - goingLeft.position + 10;
 	int unitsToGo1 = goingStrightCross.position - goingStright.position + 10;
 	int time1 = 0;
@@ -67,6 +68,7 @@ bool Tools::turnLeftPrediction(RoadEvent goingLeft, RoadEvent goingLeftCross, Ro
 				goingLeft.curentSpeed = goingLeft.topSpeed;
 			}
 	}
+	pos = 0;
 	for (; unitsToGo1 > pos; time2++)
 	{
 		pos += goingStright.curentSpeed;
@@ -79,6 +81,7 @@ bool Tools::turnLeftPrediction(RoadEvent goingLeft, RoadEvent goingLeftCross, Ro
 	}
 	if (time1 < time2)
 	{
+		
 		return true;
 	}
 	else return false;
