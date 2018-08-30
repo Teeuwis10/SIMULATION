@@ -19,9 +19,10 @@ public:
 	int maxAcc;
 	int currentAcc;
 	int safeDistance;
-	
+	std::string spawnLane;
+	int direction;
 
-	RoadEvent(std::string name, int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance);
+	RoadEvent(std::string name, int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance, int direction, std::string spawnLane);
 	RoadEvent(std::string name, int position, int lenght);
 	RoadEvent();
 	void Drive(int a);
