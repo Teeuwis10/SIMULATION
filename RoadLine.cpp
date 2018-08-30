@@ -76,7 +76,14 @@ void RoadLine::RoadLinePrint(ConsolColor Color)
 		{
 			
 			for (int i = 0; i < (*it).lenght; i++) {
-				tmp[(*it).position + i ] = '>';
+				if ((*it).position + i > lenght)
+				{
+					tmp[(*it).lenght] = '>';
+				}
+				else
+				{
+					tmp[(*it).position + i] = '>';
+				}
 			}
 		}
 		if ((*it).name == "START")

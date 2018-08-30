@@ -3,7 +3,7 @@
 #include <iostream>
 #include <utility>
 #include <vector>
-RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance)
+RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, int currentSpeed, int maxAcc, int currentAcc, int safeDistance,int direction, std::string spawnlane)
 {
 	this->name = name;
 	this->position = position;
@@ -13,6 +13,8 @@ RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, in
 	this->maxAcc = maxAcc;
 	this->currentAcc = currentAcc;
 	this->safeDistance = safeDistance;
+	this->direction = direction;
+	this->spawnLane = spawnLane;
 
 }
 
