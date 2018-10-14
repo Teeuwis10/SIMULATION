@@ -1,4 +1,14 @@
-﻿  RoadLine.cpp
+﻿  EventManager.cpp
+  Main.cpp
+  Road.cpp
+  RoadBuilder.cpp
+  RoadEvent.cpp
+  RoadLine.cpp
 c:\users\raven\source\repos\simulation\simulation\roadline.cpp(61): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
 c:\users\raven\source\repos\simulation\simulation\roadline.cpp(70): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  Simulation.cpp
+c:\users\raven\source\repos\simulation\simulation\simulation.cpp(253): warning C4553: '==': result of expression not used; did you intend '='?
+  Tools.cpp
+c:\users\raven\source\repos\simulation\simulation\tools.cpp(21): warning C4244: 'initializing': conversion from 'std::chrono::system_clock::rep' to 'unsigned int', possible loss of data
+  Generating Code...
   SIMULATION.vcxproj -> C:\Users\raven\source\repos\SIMULATION\x64\Debug\SIMULATION.exe
