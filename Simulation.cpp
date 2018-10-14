@@ -47,17 +47,23 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 	while (true)
 	{
 		//////////////////////////////////////////////iterator pasow (przygotowane dla domyslnie jedenego pasa)//////////////////////////////////////////////////////////
+		int flow = 0;
+		int density = 0;
+
 		bool bl = false;
 		bool b5 = false;
+		RoadEvent tmp_car;
 		/////////////////////////////////////////////prawy pas A2 ////////////////////////////////////////////////////////////////////
 		for (std::vector<RoadLine>::iterator it = A2.rightLines.begin(); it != A2.rightLines.end(); it++)
 		{//zmienne samochodu do przeniesienia na inna liste(najlepiej byloby zamienic to na obiekt RoadEvent
 			int a = 0;
 			int lenght_ = 0;
+			bool car_to_remove = true;
 			///////////////////////////////////////////////iterator eventow na pasie/////////////////////////////////////////////////
 			for (std::vector<RoadEvent>::iterator itt = (*it).Event.begin(); itt != (*it).Event.end(); itt++)
 			{
-			
+				//density+=(*itt).lenght;
+				car_to_remove = false;
 				int direction = Tool.RandF(0, 2);   //pozniej tutaj funkcja sterujaca zachowaniem samochodow na skrzyzowaniu // 
 													// 0 - prosto  z pierszenswtwem
 													// 1 - prosto bez pierszenstwa
@@ -65,13 +71,24 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 													// 3 - w prawo
 													
 				
-				direction = 1;						//do testowania
+				direction = 0;						//do testowania
 				if ((*itt).name == "CAR")
 				{
+					//std::cout << "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT: " << (*itt).spawnLane.substr(3, (*itt).spawnLane.length()) << "cos" << std::endl;
 					auto tmp = std::next(itt, 1);
 					RoadEvent nextEvent = *tmp;
 					RoadEvent currentEvent = *itt;
+				
+					
 					eventManager.DriveStraright(itt, (*it).Event, direction); // jedzi prosto lub jedz prosto przez skrzyrzowanie z pierszenstwem przejazdu
+					if (nextEvent.name == "END" && (*itt).position + (*itt).lenght + (*itt).curentSpeed + 15 > nextEvent.position)
+					{
+						car_to_remove = true;
+						//std::cout << (*itt).name << " " << (*itt).lenght << " " << (*itt).spawnLane.substr(3, (*itt).spawnLane.length()) << "" << (*itt).spawnLane << std::endl;
+					
+						//std::cout <<"TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT: " << (*itt).spawnLane << "cos" << currentEvent.name << std::endl;
+						//system("pause");
+					}
 				/*	void EventManager::test() {
 						int a;
 				};*/	
@@ -149,6 +166,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 						{
 							for (std::vector<RoadEvent>::iterator oll = (*ol).Event.begin(); oll != (*ol).Event.end(); oll++)
 							{
+
 								if ((*oll).name == "CROSS")
 								{
 
@@ -195,13 +213,13 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 														if (Tool.turnLeftPrediction((*itt), nextEvent, prevEvent, (*oll)) == false)
 														{
 															std::cout << "nie moge jechac prosto przez jedacych z prawej" << std::endl;
-															rightRoad == false;
+															rightRoad = false;
 															(*itt).curentSpeed = 0;
 														}
 														if (Tool.turnLeftPrediction((*itt), nextEvent, prevEventin, (*jkk)) == false)
 														{
 															std::cout << "nie moge jechac prosto przez jedacych z lewej" << std::endl;
-															leftRoad == false;
+															leftRoad = false;
 															(*itt).curentSpeed = 0;
 														}
 														
@@ -264,8 +282,9 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 									cross = false;
 								}
 							}
-							leftRoad == true;
-							rightRoad == true;
+							leftRoad = true;
+							rightRoad = true;
+
 						}
 						
 					}
@@ -333,6 +352,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 															std::cout << "wjezdzam na: A1 prawy pas" << std::endl;
 															bl = true;
 															a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
+															density -= (*itt).lenght;
 															lenght_ = (*itt).lenght;
 															itt = (*it).Event.erase(itt);
 														}
@@ -383,6 +403,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 										std::cout << "wjezdzam na: A1 lewy pas" << std::endl;
 										b5 = true;
 										a = (*oll).position + std::abs((nextEvent.position - (*itt).position + (*itt).lenght) - (*itt).curentSpeed);
+										density -= (*itt).lenght;
 										lenght_ = (*itt).lenght;
 										itt = (*it).Event.erase(itt);
 									}
@@ -392,11 +413,38 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 
 						}
 					}
+					
+					//flowA2R += currentEvent.curentSpeed*currentEvent.lenght;
 				}
 				
+				if (car_to_remove == true)
+				{
+					tmp_car = (*itt);
+					itt=(*it).Event.erase(itt);
+					
+					
+				}
 			}
+			
 			(*it).RoadLinePrint(ConsolColor::RED);
 			/////////////////////////////dalej logika skretu w lewo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
+			if (car_to_remove == true)
+			{
+				std::cout <<"test: "<< tmp_car.spawnLane.substr(0, 2) << std::endl;
+				system("pause");
+				if (tmp_car.spawnLane.substr(0, 2) == "A2" && tmp_car.name == "CAR") {
+
+					eventManager.insertCar(tmp_car, A2);
+					density += tmp_car.lenght;
+
+				}
+				else
+				{
+					eventManager.insertCar(tmp_car, A1);
+				} 
+				
+				
+			}
 			if (bl == true)
 			{
 				eventManager.insertCar("CAR", a, lenght_, A1, "RIGHT", "A1_RIGHT");
@@ -405,9 +453,13 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			{
 				eventManager.insertCar("CAR", a, lenght_, A1, "LEFT", "A1_LEFT");
 			}
-			b5 == false;
+			car_to_remove = false;
+			b5 = false;
 			bl = false;
+			
 		}
+		std::cout << "desity: " << density << std::endl;
+		density = 0;
 		//////////////////////////////////////////////iterator pasow (przygotowane dla domyslnie jedenego pasa)//////////////////////////////////////////////////////////
 		bool b3 = false;
 		/////////////////////////////////////////////prawy pas A1 green////////////////////////////////////////////////////
@@ -532,7 +584,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			/////////////////////////////dalej logika skretu w lewo///// dodanie samochodu do innej drogi/////////////////////////////////////////////////
 			if (b3 == true)
 			{
-				eventManager.insertCar("CAR", a, lenght_, A1, "RIGHT", "A1_RIGHT");
+				eventManager.insertCar("CAR", a, 10, A1, "RIGHT", "A1_RIGHT");
 			}
 			b3 = false;
 		}
@@ -662,7 +714,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			if (b2 == true)
 			{
 				
-				eventManager.insertCar("CAR", a, lenght_, A1, "LEFT", "A1_LEFT");
+				eventManager.insertCar("CAR", a, 10, A1, "LEFT", "A1_LEFT");
 			
 
 			}
@@ -797,7 +849,7 @@ void Simulation::StartSimulation(ParamHolder Paramiters)
 			if (b8 == true)
 			{
 
-				eventManager.insertCar("CAR", a, lenght_, A2, "RIGHT", "A2_RIGHT");
+				eventManager.insertCar("CAR", a, 10, A2, "RIGHT", "A2_RIGHT");
 
 
 			}

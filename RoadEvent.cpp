@@ -14,7 +14,7 @@ RoadEvent::RoadEvent(std::string name,int position, int lenght, int topSpeed, in
 	this->currentAcc = currentAcc;
 	this->safeDistance = safeDistance;
 	this->direction = direction;
-	this->spawnLane = spawnLane;
+	this->spawnLane = spawnlane;
 
 }
 
