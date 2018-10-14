@@ -43,8 +43,9 @@ void RoadLine::RoadLinePrint(ConsolColor Color)
 	itt--;
 	int lenght = (*itt).position+1;
 	Tools Tool = Tools();
-	
-	std::cout << "-----------------------------------"<<roadName<<"---"<< lineName <<"----------------------------------------------------" << std::endl;
+	int density = 0;
+	int flow = 0;
+	std::cout << "-----------------------------------"<<roadName<<"---"<< lineName<<"----------------------------------------------------" << std::endl;
 	std::cout << std::setw(10) << "iterator" << std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::setw(5) << "speed" << std::setw(5) << "acc" << std::setw(5) <<"lenght"  << std::endl;
 	
 
@@ -52,15 +53,18 @@ void RoadLine::RoadLinePrint(ConsolColor Color)
 
 	for (std::vector<RoadEvent>::iterator it = Event.begin(); it != Event.end(); it++)
 	{
-		
+		density += (*it).lenght;
+		flow += (*it).curentSpeed*(*it).lenght;
 		if((*it).name == "END")
 		{
+			density = density / (*it).position;
 			auto tmp2 = std::next(it, 0);
 
 			RoadEvent nextEvent = *tmp2;
 			int index = std::distance(Event.begin(), it);
 			std::cout << std::setw(6) << index << " " << std::setw(5) << (*it).name << std::setw(10) << (*it).position << std::setw(20) << Tool.getDistance((*it), nextEvent)
 				<< " " << std::setw(5) << nextEvent.name << std::setw(5) << (*it).curentSpeed << std::setw(5) << (*it).currentAcc << std::setw(5) << (*it).lenght << std::endl;
+			std::cout << "------------------------------------density: " << density << "------------------------flow: "<< flow  << std::endl;
 		}
 		else
 		{
@@ -109,7 +113,7 @@ void RoadLine::RoadLinePrint(ConsolColor Color)
 	std::cout << std::endl;
 	
 		SetConsoleTextAttribute(hConsole, 15);
-		system("pause");
+	//	system("pause");
 		std::cout << "\033[2J\033[1;1H";
 };
 
