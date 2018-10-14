@@ -43,7 +43,7 @@ void RoadLine::RoadLinePrint(ConsolColor Color)
 	itt--;
 	int lenght = (*itt).position+1;
 	Tools Tool = Tools();
-	int density = 0;
+	float density = 0;
 	int flow = 0;
 	std::cout << "-----------------------------------"<<roadName<<"---"<< lineName<<"----------------------------------------------------" << std::endl;
 	std::cout << std::setw(10) << "iterator" << std::setw(20) << "current event" << std::setw(20) << "distance to next" << std::setw(5) << "speed" << std::setw(5) << "acc" << std::setw(5) <<"lenght"  << std::endl;
